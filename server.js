@@ -14,7 +14,9 @@ const refererURL = 'https://www.policiarcc.com/t36730-cfo-requerimentos';
 
 app.post('/post', async (req, res) => {
     try {
-       const sid = "7be5b3b13da08084ff673e65ae87a50c"; // 🔹 Cole aqui o SID obtido manualmente
+        const sid = "7be5b3b13da08084ff673e65ae87a50c"; // 🔹 Substitua pelo seu SID real
+        const message = req.body.message;
+        
 
 
         if (!sid) {
