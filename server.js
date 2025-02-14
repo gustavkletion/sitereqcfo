@@ -14,25 +14,23 @@ const refererURL = 'https://www.policiarcc.com/t36730-cfo-requerimentos';
 
 app.post('/post', async (req, res) => {
     try {
-        // 🔹 Definir o SID manualmente para testes
-        const sid = "7be5b3b13da08084ff673e65ae87a50c"; 
-        const { message } = req.body;
+        const { sid, message } = req.body;
 
-        if (!message) {
-            return res.status(400).json({ success: false, error: "Mensagem não pode estar vazia!" });
+        if (!sid) {
+            return res.status(403).json({ success: false, error: "Erro: Você precisa estar logado no fórum!" });
         }
 
         const postData = new URLSearchParams({
             mode: 'reply',
-            t: '36730',  // ID do tópico
-            message: message, // Conteúdo da mensagem
-            post: 'Enviar' // Botão de envio
+            t: 36730,  
+            message: message,
+            post: 'Enviar',
+            sid: sid
         });
 
         const response = await axios.post(forumURL, postData, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': 'Mozilla/5.0',
                 'Referer': refererURL,
                 'Cookie': `fa_www_policiarcc_com_sid=${sid}`
             }
@@ -40,7 +38,7 @@ app.post('/post', async (req, res) => {
 
         res.json({ success: true, data: response.data });
     } catch (error) {
-        console.error('Erro ao enviar mensagem:', error.response?.data || error.message);
+        console.error('Erro ao enviar mensagem:', error.message);
         res.status(500).json({ success: false, error: error.message });
     }
 });
