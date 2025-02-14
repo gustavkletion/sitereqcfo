@@ -14,7 +14,8 @@ const refererURL = 'https://www.policiarcc.com/t36730-cfo-requerimentos';
 
 app.post('/post', async (req, res) => {
     try {
-        const { sid, message } = req.body;
+       const sid = "7be5b3b13da08084ff673e65ae87a50c"; // 🔹 Cole aqui o SID obtido manualmente
+
 
         if (!sid) {
             return res.status(403).json({ success: false, error: "Erro: Você precisa estar logado no fórum!" });
@@ -24,9 +25,9 @@ app.post('/post', async (req, res) => {
             mode: 'reply',
             t: 36730,  
             message: message,
-            post: 'Enviar',
-            sid: sid
+            post: 'Enviar'
         });
+        
 
         const response = await axios.post(forumURL, postData, {
             headers: {
@@ -41,7 +42,7 @@ app.post('/post', async (req, res) => {
         console.error('Erro ao enviar mensagem:', error.message);
         res.status(500).json({ success: false, error: error.message });
     }
-});
+}); 
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
